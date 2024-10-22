@@ -46,9 +46,55 @@ public class OpMode3 extends LinearOpMode {
                     robot.motorbr.getCurrentPosition()
             ));
 
-            //robot.setLiftPower((gamepad1.right_stick_y * 0.5), (gamepad1.right_stick_y * -0.5));
+            robot.setLiftPower((gamepad1.right_stick_y * 0.5), (gamepad1.right_stick_y * -0.5));
 //make sure one of the directions is correct/reversed
 
+
+            //spin
+
+
+            if (gamepad2.right_trigger > 0.7){
+                robot.intakeSpin.setPower(1);
+            }
+
+            else{
+                robot.intakeSpin.setPower(0);
+            }
+
+            if (gamepad2.left_trigger > 0.7){
+                robot.intakeSpin.setPower(1);
+            }
+
+            else{
+                robot.intakeSpin.setPower(0);
+            }
+
+            //tilt bucket
+
+            if (gamepad2.x){
+                robot.bucketTilt.setPosition(1.0);
+            }
+
+            if (gamepad2.b){
+                robot.bucketTilt.setPosition(0);
+            }
+
+            //intake motor
+            if (gamepad2.right_stick_y > 0.7){
+                robot.intakeMotor.setPower(0.5);
+                robot.setDrivePower(vertical + turn - horizontal, vertical - turn + horizontal, vertical + turn + horizontal, vertical - turn - horizontal);
+            }
+
+            else if (gamepad2.right_stick_y < -0.7){
+                robot.intakeMotor.setPower(0.5);
+                robot.setDrivePower(vertical + turn - horizontal, vertical - turn + horizontal, vertical + turn + horizontal, vertical - turn - horizontal);
+            }
+
+            else{
+                robot.intakeMotor.setPower(0);
+                robot.setDrivePower(vertical + turn - horizontal, vertical - turn + horizontal, vertical + turn + horizontal, vertical - turn - horizontal);
+                }
+            }
             /*
             //lift arm start
             if (gamepad2.b) { //if button a pressed

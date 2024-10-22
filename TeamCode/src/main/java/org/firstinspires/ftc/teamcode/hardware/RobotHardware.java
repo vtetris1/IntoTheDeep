@@ -29,6 +29,7 @@
 
 package org.firstinspires.ftc.teamcode.hardware;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -70,8 +71,9 @@ public class RobotHardware {
 
 
     public Servo bucketTilt = null;
-    public Servo intakeTilt = null;
+    public CRServo intakeSpin = null;
 
+    public Servo intakeTilt = null;
     //public Servo tiltServoLeft = null;
     //public Servo grabServoLeft = null;
 
@@ -119,9 +121,9 @@ public class RobotHardware {
         motorbl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // Define and initialize ALL installed servos.
-        //bucketTilt = hwMap.get(Servo.class, "");
-        //intakeTilt = hwMap.get(Servo.class, "");
-        //grabServoRight = hwMap.get(Servo.class, "grabServoR");
+        bucketTilt = hwMap.get(Servo.class, "bucket_servo");
+        intakeSpin = hwMap.get(CRServo.class, "spin_servo");
+        //intakeTilt = hwMap.get(Servo.class, "intake_servo");
         //tiltServoLeft = hwMap.get(Servo.class, "tiltServoL");
         //grabServoLeft = hwMap.get(Servo.class, "grabServoL");
         //autoPixel.setPosition(0.5);
