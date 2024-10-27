@@ -52,7 +52,18 @@ public class OpMode3 extends LinearOpMode {
 
             //spin
 
-            //tilt bucket
+
+            if (gamepad2.right_stick_y > 0.7){
+                robot.intakeArm.setPower(0.5);
+                robot.setDrivePower(vertical + turn - horizontal, vertical - turn + horizontal, vertical + turn + horizontal, vertical - turn - horizontal);
+            }
+
+            else if (gamepad2.right_stick_y < -0.7){
+                robot.intakeArm.setPower(0.5);
+                robot.setDrivePower(vertical + turn - horizontal, vertical - turn + horizontal, vertical + turn + horizontal, vertical - turn - horizontal);
+            }
+
+//tilt bucket
 
             if (gamepad2.x){
                 robot.bucketTilt.setPosition(0.5);
@@ -78,6 +89,9 @@ public class OpMode3 extends LinearOpMode {
                 robot.setDrivePower(vertical + turn - horizontal, vertical - turn + horizontal, vertical + turn + horizontal, vertical - turn - horizontal);
                 }
             }
+
+        //intake motor
+
             /*
             //lift arm start
             if (gamepad2.b) { //if button a pressed

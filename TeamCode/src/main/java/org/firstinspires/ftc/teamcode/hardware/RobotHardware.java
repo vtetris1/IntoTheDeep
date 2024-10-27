@@ -59,6 +59,8 @@ public class RobotHardware {
 
     public DcMotor intakeMotor = null;
 
+    public DcMotor intakeArm = null;
+
     //public DcMotor liftArm = null;
 
     //public DcMotor launcher = null;
@@ -109,7 +111,7 @@ public class RobotHardware {
         rightLiftMotor = hwMap.get(DcMotor.class, "lift_right");
 
         intakeMotor = hwMap.get(DcMotor.class,"intake_motor" );
-
+        intakeArm = hwMap.get(DcMotor.class,"intake_arm" );
         //liftHex = hwMap.get(DcMotor.class, "liftHex");
         //liftArm = hwMap.get(DcMotor.class, "liftArm");
 
