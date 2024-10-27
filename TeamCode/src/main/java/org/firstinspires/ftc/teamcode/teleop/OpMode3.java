@@ -46,7 +46,7 @@ public class OpMode3 extends LinearOpMode {
                     robot.motorbr.getCurrentPosition()
             ));
             // 0.7                          -0.7
-            robot.setLiftPower((gamepad2.left_stick_y * 1), (gamepad2.left_stick_y * -1));
+            robot.setLiftPower((gamepad2.left_stick_y * 0.7), (gamepad2.left_stick_y * -0.7));
 //make sure one of the directions is correct/reversed
 
 
