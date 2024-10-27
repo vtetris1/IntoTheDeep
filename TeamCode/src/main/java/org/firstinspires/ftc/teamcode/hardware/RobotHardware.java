@@ -71,7 +71,6 @@ public class RobotHardware {
 
 
     public Servo bucketTilt = null;
-    public CRServo intakeSpin = null;
 
     public Servo intakeTilt = null;
     //public Servo tiltServoLeft = null;
@@ -122,7 +121,6 @@ public class RobotHardware {
 
         // Define and initialize ALL installed servos.
         bucketTilt = hwMap.get(Servo.class, "bucket_servo");
-        intakeSpin = hwMap.get(CRServo.class, "spin_servo");
         //intakeTilt = hwMap.get(Servo.class, "intake_servo");
         //tiltServoLeft = hwMap.get(Servo.class, "tiltServoL");
         //grabServoLeft = hwMap.get(Servo.class, "grabServoL");
@@ -138,10 +136,10 @@ public class RobotHardware {
         //airplaneLauncher.setPosition(0);
 
         // reverse motor directions
-        motorfl.setDirection(DcMotorSimple.Direction.REVERSE);
-        motorfr.setDirection(DcMotorSimple.Direction.REVERSE);
-        motorbr.setDirection(DcMotorSimple.Direction.REVERSE);
-        motorbl.setDirection(DcMotorSimple.Direction.REVERSE);
+      //  motorfl.setDirection(DcMotorSimple.Direction.REVERSE);
+      //  motorfr.setDirection(DcMotorSimple.Direction.REVERSE);
+      //  motorbr.setDirection(DcMotorSimple.Direction.REVERSE);
+      //  motorbl.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // If there are encoders connected, switch to RUN_USING_ENCODER mode for greater accuracy
         setDrivetrainMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -241,10 +239,10 @@ public class RobotHardware {
         else if (br < -1.0)
             br = -1.0;
 
-        motorfl.setPower(-1 * fl);
-        motorfr.setPower(fr);
+        motorfl.setPower(fl); //back left
+        motorfr.setPower(-1 * fr);
         motorbl.setPower(bl);
-        motorbr.setPower(br); //had to manually reverse (the -1 reversed it) (Line:93)
+        motorbr.setPower(br); //backright
 
     }
 
@@ -259,8 +257,8 @@ public class RobotHardware {
         else if (rightm < -1.0)
             rightm = -1.0;
 
-        //leftLiftMotor.setPower(leftm); check direction
-        //rightLiftMotor.setPower(rightm); reverse the direrction
+        leftLiftMotor.setPower(leftm);
+        rightLiftMotor.setPower(rightm);
     }
     public void setAllDrivePower(double p){ setDrivePower(p,p,p,p);}
     //public void setArmPower(double armPower){

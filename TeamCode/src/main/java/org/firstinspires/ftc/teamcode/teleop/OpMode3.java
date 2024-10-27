@@ -33,9 +33,9 @@ public class OpMode3 extends LinearOpMode {
         // Put initialization blocks here.
         waitForStart();
         while (opModeIsActive()) {
-            double horizontal = gamepad1.left_stick_x * -0.5;
-            double vertical = -gamepad1.left_stick_y * 0.5;
-            double turn = gamepad1.right_stick_x * 0.5;
+            double horizontal = gamepad1.left_stick_x * -0.7;
+            double vertical = -gamepad1.left_stick_y * 0.7;
+            double turn = gamepad1.right_stick_x * 0.7;
 
             robot.setDrivePower(vertical + turn - horizontal, vertical - turn + horizontal, vertical + turn + horizontal, vertical - turn - horizontal);
 
@@ -46,33 +46,16 @@ public class OpMode3 extends LinearOpMode {
                     robot.motorbr.getCurrentPosition()
             ));
 
-            robot.setLiftPower((gamepad1.right_stick_y * 0.5), (gamepad1.right_stick_y * -0.5));
+            robot.setLiftPower((gamepad2.left_stick_y * 0.7), (gamepad2.left_stick_y * -0.7));
 //make sure one of the directions is correct/reversed
 
 
             //spin
 
-
-            if (gamepad2.right_trigger > 0.7){
-                robot.intakeSpin.setPower(1);
-            }
-
-            else{
-                robot.intakeSpin.setPower(0);
-            }
-
-            if (gamepad2.left_trigger > 0.7){
-                robot.intakeSpin.setPower(1);
-            }
-
-            else{
-                robot.intakeSpin.setPower(0);
-            }
-
             //tilt bucket
 
             if (gamepad2.x){
-                robot.bucketTilt.setPosition(1.0);
+                robot.bucketTilt.setPosition(0.5);
             }
 
             if (gamepad2.b){
@@ -219,5 +202,5 @@ public class OpMode3 extends LinearOpMode {
 */
         }
 
-    }
+
 }
