@@ -73,6 +73,7 @@ public class RobotHardware {
 
 
     public Servo bucketTilt = null;
+    public Servo clawServo = null;
 
     public Servo intakeTilt = null;
     //public Servo tiltServoLeft = null;
@@ -122,6 +123,7 @@ public class RobotHardware {
         motorbl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // Define and initialize ALL installed servos.
+        clawServo = hwMap.get(Servo.class, "claw_servo");
         bucketTilt = hwMap.get(Servo.class, "bucket_servo");
         //intakeTilt = hwMap.get(Servo.class, "intake_servo");
         //tiltServoLeft = hwMap.get(Servo.class, "tiltServoL");

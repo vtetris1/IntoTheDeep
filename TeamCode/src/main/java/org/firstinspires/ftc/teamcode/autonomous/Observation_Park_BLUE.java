@@ -3,34 +3,48 @@ package org.firstinspires.ftc.teamcode.autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.hardware.RobotHardware;
 
-@Autonomous(name="TicksToInchTest")
-public class AutoPixelTest extends LinearOpMode {
+//ignore this for now
+@Autonomous(name="Observation_Park_BLUE")
+public class Observation_Park_BLUE extends LinearOpMode {
     RobotHardware robot = new RobotHardware();
-
     // Motor encoder parameter
     double ticksPerInch = 31.3;
+    double ticksPerDegree = 15.6;
+
 
     @Override
     public void runOpMode() throws InterruptedException {
-
         robot.init(hardwareMap);
 
-        waitForStart();
+        //reset encoder
+        robot.setAutoDriveMotorMode();
+
 
         if (opModeIsActive()) {
 
-            int forwardTicks = 1000;
+
+            telemetry.update();
+
+            int forwardTicks = 100; //fix distances
             driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.4,
                     true, robot.yaw0);
 
-        }
+            turnToTargetYaw(90,0.6, 2500);
+
+            forwardTicks = 1000; //fix distances
+            driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.4,
+                    true, robot.yaw0);
+
+
+
 
         }
+    }
+
     private void driveMotors(int flTarget, int blTarget, int frTarget, int brTarget,
                              double power,
                              boolean bKeepYaw, double targetYaw){
@@ -102,15 +116,86 @@ public class AutoPixelTest extends LinearOpMode {
         robot.motorbl.setPower(0);
         robot.motorfr.setPower(0);
         robot.motorbr.setPower(0);
-
     }
+
+    private void driveStrafe(int flTarget, int blTarget, int frTarget, int brTarget,
+                             double power,
+                             boolean bKeepYaw, double targetYaw){
+        double currentYaw, diffYaw;
+        double powerDeltaPct, powerL, powerR;
+        int direction;
+
+        robot.motorfl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.motorbl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.motorfr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.motorbr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        robot.motorfl.setTargetPosition(flTarget);
+        robot.motorbl.setTargetPosition(blTarget);
+        robot.motorfr.setTargetPosition(frTarget);
+        robot.motorbr.setTargetPosition(brTarget);
+
+        robot.motorfl.setPower(power);
+        robot.motorbl.setPower(power);
+        robot.motorfr.setPower(power);
+        robot.motorbr.setPower(power);
+
+        robot.motorfl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.motorbl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.motorfr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.motorbr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        // Defensive programming.
+        // Use bKeepYaw only when all targets are the same, meaning moving in a straight line
+        if (! ((flTarget == blTarget)
+                && (flTarget == frTarget)
+                && (flTarget == brTarget)) )
+            bKeepYaw = false;
+        direction = (flTarget > 0) ? 1 : -1;
+        while(opModeIsActive() &&
+                (robot.motorfl.isBusy() &&
+                        robot.motorbl.isBusy() &&
+                        robot.motorfr.isBusy() &&
+                        robot.motorbr.isBusy())){
+            if (bKeepYaw) {
+
+                currentYaw = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
+                if (Math.abs(currentYaw - targetYaw) > 2.0)
+                    powerDeltaPct = 0.25;
+                else
+                    powerDeltaPct = Math.abs(currentYaw - targetYaw) / 2.0 * 0.25;
+                if (currentYaw < targetYaw) {
+                    powerL = power * (1 - direction * powerDeltaPct);
+                    powerR = power * (1 + direction * powerDeltaPct);
+                }
+                else {
+                    powerL = power * (1 + direction * powerDeltaPct);
+                    powerR = power * (1 - direction * powerDeltaPct);
+                }
+                if (powerL > 1.0)
+                    powerL = 1.0;
+                if (powerR > 1.0)
+                    powerR = 1.0;
+                robot.motorfl.setPower(powerL);
+                robot.motorbl.setPower(powerL);
+                robot.motorfr.setPower(powerR);
+                robot.motorbr.setPower(powerR);
+            }
+            idle();
+        }
+
+        robot.motorfl.setPower(0);
+        robot.motorbl.setPower(0);
+        robot.motorfr.setPower(0);
+        robot.motorbr.setPower(0);
+    }
+
 
     private void turnToTargetYaw(double targetYawDegree, double power, long maxAllowedTimeInMills){
         long timeBegin, timeCurrent;
         double currentYaw = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);;
         int ticks, tickDirection;
         double factor = 1.0;
-        double ticksPerDegree = 15.6;
 
         double diffYaw = Math.abs(currentYaw - targetYawDegree);
         telemetry.addLine(String.format("\nCurrentYaw=%.2f\nTargetYaw=%.2f", currentYaw, targetYawDegree));
@@ -121,8 +206,8 @@ public class AutoPixelTest extends LinearOpMode {
                 && opModeIsActive()
                 && ((timeCurrent-timeBegin) < maxAllowedTimeInMills)) {
             ticks = (int) (diffYaw * ticksPerDegree);
-            if (ticks > 85)
-                ticks = 85;
+            if (ticks > 220)
+                ticks = 220;
 
             tickDirection = (currentYaw < targetYawDegree) ? -1 : 1;
             if (ticks < 1)
@@ -146,5 +231,14 @@ public class AutoPixelTest extends LinearOpMode {
             telemetry.update();
         }
     }
-}
 
+    private void deployPreloadedPixel1(int timeIntervalMs) {
+        // Deploy preloaded pixel 1
+        //robot.autoPixel.setPosition(1.0);
+        sleep(timeIntervalMs);
+        //robot.autoPixel.setPosition(0.5);
+        sleep(timeIntervalMs);
+
+    }
+
+}
