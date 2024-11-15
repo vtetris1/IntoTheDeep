@@ -59,9 +59,7 @@ public class RobotHardware {
 
     public DcMotor intakeMotor = null;
 
-    public DcMotor intakeArm = null;
-
-    //public DcMotor liftArm = null;
+    public DcMotor liftArm = null;
 
     //public DcMotor launcher = null;
 
@@ -111,10 +109,10 @@ public class RobotHardware {
         leftLiftMotor = hwMap.get(DcMotor.class, "lift_left");
         rightLiftMotor = hwMap.get(DcMotor.class, "lift_right");
 
-        intakeMotor = hwMap.get(DcMotor.class,"intake_motor" );
-        intakeArm = hwMap.get(DcMotor.class,"intake_arm" );
-        //liftHex = hwMap.get(DcMotor.class, "liftHex");
-        //liftArm = hwMap.get(DcMotor.class, "liftArm");
+        intakeMotor = hwMap.get(DcMotor.class,"intake_motor");
+
+        // liftHex = hwMap.get(DcMotor.class, "liftHex");
+        liftArm = hwMap.get(DcMotor.class, "lift_arm");
 
         // set Brake zero power behavior
         motorfr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
