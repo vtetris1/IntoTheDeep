@@ -23,20 +23,21 @@ public class Observation_Park_RED extends LinearOpMode {
         //reset encoder
         robot.setAutoDriveMotorMode();
 
-
+        telemetry.update();
+        waitForStart();
         if (opModeIsActive()) {
 
 
             telemetry.update();
-
-            int forwardTicks = 100; //fix distances
-            driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.4,
+//-1-234
+            int forwardTicks = 300; //fix distances
+            driveMotors(-forwardTicks, -forwardTicks, forwardTicks, forwardTicks, 0.4,
                     true, robot.yaw0);
 
-            turnToTargetYaw(270,0.6, 2500);
+            turnToTargetYaw(90,0.4, 5500);
 
-            forwardTicks = 1000; //fix distances
-            driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.4,
+            forwardTicks = -1300; //fix distances
+            driveMotors(-forwardTicks, -forwardTicks, forwardTicks, forwardTicks, 0.4,
                     true, robot.yaw0);
 
 
@@ -219,8 +220,8 @@ public class Observation_Park_RED extends LinearOpMode {
             driveMotors(
                     (int)(tickDirection * ticks),
                     (int)(tickDirection * ticks),
-                    -(int)(tickDirection * ticks),
-                    -(int)(tickDirection * ticks),
+                    (int)(tickDirection * ticks),
+                    (int)(tickDirection * ticks),
                     power * factor, false, 0);
             currentYaw = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
             timeCurrent = System.currentTimeMillis();

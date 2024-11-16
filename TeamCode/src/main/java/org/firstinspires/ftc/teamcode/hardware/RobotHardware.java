@@ -57,8 +57,6 @@ public class RobotHardware {
     public DcMotor leftLiftMotor = null;
     public DcMotor rightLiftMotor = null;
 
-    public DcMotor intakeMotor = null;
-
     public DcMotor liftArm = null;
 
     //public DcMotor launcher = null;
@@ -73,7 +71,7 @@ public class RobotHardware {
     public Servo bucketTilt = null;
     public Servo clawServo = null;
 
-    public Servo intakeTilt = null;
+    public CRServo intakeServo = null;
     //public Servo tiltServoLeft = null;
     //public Servo grabServoLeft = null;
 
@@ -109,7 +107,7 @@ public class RobotHardware {
         leftLiftMotor = hwMap.get(DcMotor.class, "lift_left");
         rightLiftMotor = hwMap.get(DcMotor.class, "lift_right");
 
-        intakeMotor = hwMap.get(DcMotor.class,"intake_motor");
+
 
         // liftHex = hwMap.get(DcMotor.class, "liftHex");
         liftArm = hwMap.get(DcMotor.class, "lift_arm");
@@ -121,8 +119,9 @@ public class RobotHardware {
         motorbl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // Define and initialize ALL installed servos.
-        clawServo = hwMap.get(Servo.class, "claw_servo");
+        //clawServo = hwMap.get(Servo.class, "claw_servo");
         bucketTilt = hwMap.get(Servo.class, "bucket_servo");
+        //intakeServo = hwMap.get(CRServo.class, "intake_servo");
         //intakeTilt = hwMap.get(Servo.class, "intake_servo");
         //tiltServoLeft = hwMap.get(Servo.class, "tiltServoL");
         //grabServoLeft = hwMap.get(Servo.class, "grabServoL");

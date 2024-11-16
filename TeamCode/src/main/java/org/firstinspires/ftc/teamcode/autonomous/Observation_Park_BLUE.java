@@ -8,7 +8,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.hardware.RobotHardware;
 
 //ignore this for now
-@Autonomous(name="Observation_Park_BLUE")
+@Autonomous(name="Observation_Park_RED")
 public class Observation_Park_BLUE extends LinearOpMode {
     RobotHardware robot = new RobotHardware();
     // Motor encoder parameter
@@ -23,20 +23,21 @@ public class Observation_Park_BLUE extends LinearOpMode {
         //reset encoder
         robot.setAutoDriveMotorMode();
 
-
+        telemetry.update();
+        waitForStart();
         if (opModeIsActive()) {
 
 
             telemetry.update();
-
-            int forwardTicks = 100; //fix distances
-            driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.4,
+//-1-234
+            int forwardTicks = 300; //fix distances
+            driveMotors(-forwardTicks, -forwardTicks, forwardTicks, forwardTicks, 0.4,
                     true, robot.yaw0);
 
-            turnToTargetYaw(90,0.6, 2500);
+            turnToTargetYaw(270,0.4, 5500);
 
-            forwardTicks = 1000; //fix distances
-            driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.4,
+            forwardTicks = -1300; //fix distances
+            driveMotors(-forwardTicks, -forwardTicks, forwardTicks, forwardTicks, 0.4,
                     true, robot.yaw0);
 
 
@@ -219,8 +220,8 @@ public class Observation_Park_BLUE extends LinearOpMode {
             driveMotors(
                     (int)(tickDirection * ticks),
                     (int)(tickDirection * ticks),
-                    -(int)(tickDirection * ticks),
-                    -(int)(tickDirection * ticks),
+                    (int)(tickDirection * ticks),
+                    (int)(tickDirection * ticks),
                     power * factor, false, 0);
             currentYaw = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
             timeCurrent = System.currentTimeMillis();

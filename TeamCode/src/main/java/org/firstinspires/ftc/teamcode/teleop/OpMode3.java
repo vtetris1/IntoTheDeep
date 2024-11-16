@@ -54,6 +54,7 @@ public class OpMode3 extends LinearOpMode {
 
             //tilt bucket
 
+
             if (gamepad2.x) {
                 robot.bucketTilt.setPosition(1);
             }
@@ -74,22 +75,22 @@ public class OpMode3 extends LinearOpMode {
 
             //lift arm start
             if (gamepad2.a) { //if button a pressed
-                robot.intakeMotor.setPower(0.9);
+                robot.intakeServo.setPower(0.9);
 
                 //tilt the lift to be upright
 
                 // Extend liftArm
                 //liftHexArm(-1000, 0.8, 1000);
             } else {
-                robot.intakeMotor.setPower(0);
+                robot.intakeServo.setPower(0);
             }
 
             if (gamepad2.y) {
-                robot.intakeMotor.setPower(-0.7);
+                robot.intakeServo.setPower(-0.7);
                 // liftHexArm(1000, 0.8, 1000);  //set motor power
 
             } else {
-                robot.intakeMotor.setPower(0);
+                robot.intakeServo.setPower(0);
             }
 
 /*
