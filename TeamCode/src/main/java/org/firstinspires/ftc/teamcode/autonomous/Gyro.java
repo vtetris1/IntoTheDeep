@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.hardware;
+package org.firstinspires.ftc.teamcode.autonomous;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -7,7 +7,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-
+import org.firstinspires.ftc.teamcode.hardware.RobotHardware;
+/*
 @Autonomous(name="Gyro", group = "test")
 public class Gyro extends LinearOpMode {
     RobotHardware robot = new RobotHardware();
@@ -26,9 +27,9 @@ public class Gyro extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-//        while (opModeIsActive()){
-//            Orientation orientation = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-//
+        while (opModeIsActive()){
+/*            Orientation orientation = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+
 //            telemetry.addData("Orientation: ",orientation.firstAngle);
 //            telemetry.update();
 //        }
@@ -103,3 +104,4 @@ public class Gyro extends LinearOpMode {
 
     }
 }
+*/

@@ -57,7 +57,7 @@ public class RobotHardware {
     public DcMotor leftLiftMotor = null;
     public DcMotor rightLiftMotor = null;
 
-    public DcMotor liftArm = null;
+
 
     //public DcMotor launcher = null;
 
@@ -69,7 +69,7 @@ public class RobotHardware {
 
 
     public Servo bucketTilt = null;
-    public Servo clawServo = null;
+
 
     public CRServo intakeServo = null;
     //public Servo tiltServoLeft = null;
@@ -110,8 +110,6 @@ public class RobotHardware {
 
 
         // liftHex = hwMap.get(DcMotor.class, "liftHex");
-        liftArm = hwMap.get(DcMotor.class, "lift_arm");
-
         // set Brake zero power behavior
         motorfr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorfl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -119,9 +117,8 @@ public class RobotHardware {
         motorbl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // Define and initialize ALL installed servos.
-        //clawServo = hwMap.get(Servo.class, "claw_servo");
         bucketTilt = hwMap.get(Servo.class, "bucket_servo");
-        //intakeServo = hwMap.get(CRServo.class, "intake_servo");
+        intakeServo = hwMap.get(CRServo.class, "intake_servo");
         //intakeTilt = hwMap.get(Servo.class, "intake_servo");
         //tiltServoLeft = hwMap.get(Servo.class, "tiltServoL");
         //grabServoLeft = hwMap.get(Servo.class, "grabServoL");
@@ -147,8 +144,10 @@ public class RobotHardware {
 
 
         // Initialize IMU in the control hub
-        RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.UP;
-        RevHubOrientationOnRobot.UsbFacingDirection  usbDirection  = RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
+        RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.LEFT;
+        RevHubOrientationOnRobot.UsbFacingDirection  usbDirection  = RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD;
+        //RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.UP;
+        //RevHubOrientationOnRobot.UsbFacingDirection  usbDirection  = RevHubOrientationOnRobot.UsbFacingDirection.LEFT;
         RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(logoDirection, usbDirection);
         imu = hwMap.get(IMU.class, "imu");
         imu.initialize(new IMU.Parameters(orientationOnRobot));

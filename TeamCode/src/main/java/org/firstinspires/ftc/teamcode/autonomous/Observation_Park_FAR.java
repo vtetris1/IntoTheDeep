@@ -8,8 +8,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.hardware.RobotHardware;
 
 //ignore this for now
-@Autonomous(name="Red_v1_F3_F6")
-public class Red_v1_F3_F6 extends LinearOpMode {
+@Autonomous(name="Observation_Park_FAR")
+public class Observation_Park_FAR extends LinearOpMode {
     RobotHardware robot = new RobotHardware();
     // Motor encoder parameter
     double ticksPerInch = 31.3;
@@ -23,40 +23,20 @@ public class Red_v1_F3_F6 extends LinearOpMode {
         //reset encoder
         robot.setAutoDriveMotorMode();
 
-
+        telemetry.update();
+        waitForStart();
         if (opModeIsActive()) {
 
 
             telemetry.update();
-
-            robot.setLiftPower(0.3,-0.3);
-
-            int forwardTicks = 1000; //fix distances
-            driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.4,
-                    true, robot.yaw0);
-
-            sleep(100);
-
-            robot.setLiftPower(-0.3,0.3);
-
-
-            forwardTicks = -1000; //fix distances
-            driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.4,
+//-1-234
+            sleep(4000);
+            int forwardTicks = 3000; //fix distances
+            driveMotors(-forwardTicks, -forwardTicks, forwardTicks, forwardTicks, 0.4,
                     true, robot.yaw0);
 
 
-            robot.setLiftPower(-0.3,0.3);
 
-            sleep (500);
-
-            robot.setLiftPower(0,0);
-
-            turnToTargetYaw(90, 0.6, 2500);
-            //track the time of this stage
-
-            forwardTicks = 1000; //fix distances
-            driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.4,
-                    true, robot.yaw0);
 
         }
     }
@@ -213,17 +193,17 @@ public class Red_v1_F3_F6 extends LinearOpMode {
         int ticks, tickDirection;
         double factor = 1.0;
 
-        double diffYaw = Math.abs(currentYaw - targetYawDegree);
+        double diffYaw = Math.abs(currentYaw - targetYawDegree); //90
         telemetry.addLine(String.format("\nCurrentYaw=%.2f\nTargetYaw=%.2f", currentYaw, targetYawDegree));
         telemetry.update();
 
         timeBegin = timeCurrent = System.currentTimeMillis();
-        while (diffYaw > 0.5
+        while (diffYaw > 0.5 //
                 && opModeIsActive()
                 && ((timeCurrent-timeBegin) < maxAllowedTimeInMills)) {
             ticks = (int) (diffYaw * ticksPerDegree);
-            if (ticks > 220)
-                ticks = 220;
+            if (ticks > 220) //
+                ticks = 220; //
 
             tickDirection = (currentYaw < targetYawDegree) ? -1 : 1;
             if (ticks < 1)

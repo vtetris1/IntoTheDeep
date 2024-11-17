@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.hardware.RobotHardware;
@@ -46,7 +48,7 @@ public class OpMode3 extends LinearOpMode {
                     robot.motorbr.getCurrentPosition()
             ));
             // 0.7      1                    -0.7
-            robot.setLiftPower((gamepad2.left_stick_y * 0.7), (gamepad2.left_stick_y * -0.7));
+            robot.setLiftPower((gamepad2.left_stick_y * 0.5), (gamepad2.left_stick_y * -0.5));
 //make sure one of the directions is correct/reversed
 
 
@@ -60,36 +62,23 @@ public class OpMode3 extends LinearOpMode {
             }
 
             if (gamepad2.b) {
-                robot.bucketTilt.setPosition(-1);
-            }
-
-            //intake motor
-            if (gamepad2.right_stick_y > 0.7) {
-                robot.liftArm.setPower(-0.5);
-            } else if (gamepad2.right_stick_y < -0.7) {
-                robot.liftArm.setPower(0.8);
-            } else {
-                robot.liftArm.setPower(0);
+                robot.bucketTilt.setPosition(0);
             }
 
 
             //lift arm start
             if (gamepad2.a) { //if button a pressed
-                robot.intakeServo.setPower(0.9);
-
-                //tilt the lift to be upright
-
-                // Extend liftArm
-                //liftHexArm(-1000, 0.8, 1000);
-            } else {
+                robot.intakeServo.setDirection(DcMotorSimple.Direction.FORWARD);
+                robot.intakeServo.setPower(0.95);
+            }
+            else {
                 robot.intakeServo.setPower(0);
             }
 
             if (gamepad2.y) {
-                robot.intakeServo.setPower(-0.7);
-                // liftHexArm(1000, 0.8, 1000);  //set motor power
-
-            } else {
+                robot.intakeServo.setPower(-1);
+            }
+            else {
                 robot.intakeServo.setPower(0);
             }
 
