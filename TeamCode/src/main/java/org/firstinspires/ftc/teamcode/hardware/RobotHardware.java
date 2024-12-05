@@ -119,6 +119,8 @@ public class RobotHardware {
         // Define and initialize ALL installed servos.
         bucketTilt = hwMap.get(Servo.class, "bucket_servo");
         intakeServo = hwMap.get(CRServo.class, "intake_servo");
+
+
         //intakeTilt = hwMap.get(Servo.class, "intake_servo");
         //tiltServoLeft = hwMap.get(Servo.class, "tiltServoL");
         //grabServoLeft = hwMap.get(Servo.class, "grabServoL");
@@ -242,7 +244,7 @@ public class RobotHardware {
         motorfl.setPower(fl); //back left
         motorfr.setPower(-1 * fr);
         motorbl.setPower(bl);
-        motorbr.setPower(br); //backright
+        motorbr.setPower(-1 * br); //backright
 
     }
 

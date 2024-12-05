@@ -5,12 +5,12 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.teamcode.hardware.RobotHardware;
+import org.firstinspires.ftc.teamcode.hardware.RobotHardware2;
 
 //ignore this for now
 @Autonomous(name="Observation_Park_FAR")
 public class Observation_Park_FAR extends LinearOpMode {
-    RobotHardware robot = new RobotHardware();
+    RobotHardware2 robot = new RobotHardware2();
     // Motor encoder parameter
     double ticksPerInch = 31.3;
     double ticksPerDegree = 15.6;
@@ -18,7 +18,7 @@ public class Observation_Park_FAR extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        robot.init(hardwareMap);
+        robot.init2(hardwareMap);
 
         //reset encoder
         robot.setAutoDriveMotorMode();

@@ -4,19 +4,25 @@ import android.annotation.SuppressLint;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.hardware.RobotHardware;
+import org.firstinspires.ftc.teamcode.hardware.RobotHardware2;
 
 //test
-@TeleOp(name = "OpMode3")
+@TeleOp(name = "OpMode4")
 
-public class OpMode3 extends LinearOpMode {
-    public ElapsedTime mRunTime = new ElapsedTime();
+public class OpMode4 extends LinearOpMode {
+    double integralSum = 0;
+    double Kp = 0;
+    double Ki = 0;
+    double Kd = 0;
+    double Kf = 0;
+    private double lastError = 0;
 
-    RobotHardware robot = new RobotHardware();
+    ElapsedTime timer = new ElapsedTime();
+
+    RobotHardware2 robot = new RobotHardware2();
 
     private int sleepMs1 = 0;
 //
@@ -27,7 +33,7 @@ public class OpMode3 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        robot.init(hardwareMap);
+        robot.init2(hardwareMap);
 
         // robot.liftHex.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         // robot.liftHex.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -49,8 +55,23 @@ public class OpMode3 extends LinearOpMode {
                     robot.motorbr.getCurrentPosition()
             ));
 
+            double Power = pidControl(100, robot.pivotMotor.getVelocity());
+            robot.pivotMotor.setPower(Power);
+
+            if (gamepad2.right_stick_y > 0.7) {
+                robot.actuatorMotor.setPower(0.7);
+            }
+
+            else if (gamepad2.right_stick_y < -0.7){
+                robot.actuatorMotor.setPower(0.7);
+            }
+
+            else {
+                robot.actuatorMotor.setPower(0);
+            }
+
             // 0.7      1                    -0.7
-            robot.setLiftPower((gamepad2.left_stick_y * 0.7), (gamepad2.left_stick_y * -0.7));
+
 //make sure one of the directions is correct/reversed
 
 
@@ -59,31 +80,23 @@ public class OpMode3 extends LinearOpMode {
             //tilt bucket
 
 
-            if (gamepad2.x) {
-                robot.bucketTilt.setPosition(0.9);
-            }
-
-            if (gamepad2.b) {
-                robot.bucketTilt.setPosition(0.2);
-            }
 
 
-            //lift arm start
+
+/*           //lift arm start
             if (gamepad2.a) { //if button a pressed
-                robot.intakeServo.setDirection(DcMotorSimple.Direction.FORWARD);
-                robot.intakeServo.setPower(0.95);
-            }
-            else {
-                robot.intakeServo.setPower(0);
+                robot.intakeServo.setPosition(1);
             }
 
-            if (gamepad2.y) {
-                robot.intakeServo.setPower(-1);
-            }
-            else {
-                robot.intakeServo.setPower(0);
+            else if (gamepad2.y) {
+                robot.intakeServo.setPosition(0);
             }
 
+            else{
+                robot.intakeServo.setPosition(0.5);
+            }
+
+*/
 /*
             if (gamepad2.y) { //if button a pressed
                 // Extend liftArm
@@ -105,57 +118,7 @@ public class OpMode3 extends LinearOpMode {
 
 
 
-//grabber
-            if (gamepad2.left_trigger > 0.5) {
-                robot.grabServoLeft.setPosition(1.0); // open
 
-            } else if (gamepad2.left_bumper) {
-                robot.grabServoLeft.setPosition(0.0); // close
-
-
-            }
-
-            if (gamepad2.right_trigger > 0.5) {
-
-                robot.grabServoRight.setPosition(0.0); // open
-            } else if (gamepad2.right_bumper) {
-
-                robot.grabServoRight.setPosition(1.0); // close
-            }
-
-
-//tilt arm
-            if (gamepad2.left_stick_y > 0.7) {
-                robot.liftHex.setPower(-0.5);
-                robot.setDrivePower(vertical + turn - horizontal, vertical - turn + horizontal, vertical + turn + horizontal, vertical - turn - horizontal);
-                //liftHexArm(-100, 0.6, 1000);
-
-            }
-
-            else if (gamepad2.left_stick_y < -0.7) {
-                robot.liftHex.setPower(0.3);
-                robot.setDrivePower(vertical + turn - horizontal, vertical - turn + horizontal, vertical + turn + horizontal, vertical - turn - horizontal);
-                //liftHexArm(100, 0.6, 1000);
-
-
-            }
-
-            else {
-                robot.liftHex.setPower(0);
-            }
-
-
-
-// tilt servo
-            if (gamepad2.right_stick_y > 0.7) {
-                robot.tiltServoLeft.setPosition(1.0);
-
-            } else if (gamepad2.right_stick_y < -0.7) {
-                robot.tiltServoLeft.setPosition(0);
-            }
-
-
-        }
 
 
         //emergency releases
@@ -193,4 +156,19 @@ public class OpMode3 extends LinearOpMode {
         }
 
     }
+
+    private double pidControl(double refrence,double state) {
+        double error  = refrence - state;
+        integralSum += error * timer.seconds();
+        double derivative = (error - lastError) / timer.seconds();
+        lastError = error;
+
+        timer.reset();
+
+        double output = (error * Kp + (derivative * Kd) + (integralSum * Ki) + (refrence * Kf));
+
+        return output;
+    }
+
+
 }

@@ -1,6 +1,6 @@
-package org.firstinspires.ftc.teamcode.teleop;
+/*package org.firstinspires.ftc.teamcode.teleop;
 //test
-/*
+
 @TeleOp(name = "OpMode2")
 
 public class OpMode extends LinearOpMode {

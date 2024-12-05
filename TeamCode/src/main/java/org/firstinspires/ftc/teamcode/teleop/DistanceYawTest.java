@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.teleop;
+/*package org.firstinspires.ftc.teamcode.teleop;
 
 import android.annotation.SuppressLint;
 
@@ -17,7 +17,7 @@ public class DistanceYawTest extends LinearOpMode {
 
     /**
      * This function is executed when this Op Mode is selected from the Driver Station.
-     */
+
     @SuppressLint("DefaultLocale")
     @Override
     public void runOpMode() throws InterruptedException {
@@ -40,3 +40,4 @@ public class DistanceYawTest extends LinearOpMode {
         }
     }
 }
+*/
