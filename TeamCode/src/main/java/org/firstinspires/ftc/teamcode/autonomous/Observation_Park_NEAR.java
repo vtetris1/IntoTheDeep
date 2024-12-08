@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.hardware.RobotHardware2;
 
 //ignore this for now
 @Autonomous(name="Observation_Park_NEAR")
-public class Observation_Park_NEAR extends LinearOpMode {
+public class   Observation_Park_NEAR extends LinearOpMode {
     RobotHardware2 robot = new RobotHardware2();
     // Motor encoder parameter
     double ticksPerInch = 31.3;
@@ -32,7 +32,7 @@ public class Observation_Park_NEAR extends LinearOpMode {
 //-1-234
 
             int forwardTicks = 1600; //fix distances
-            driveMotors(-forwardTicks, -forwardTicks, forwardTicks, forwardTicks, 0.4,
+            driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.4,
                     true, robot.yaw0);
 
 

@@ -2,25 +2,29 @@ package org.firstinspires.ftc.teamcode.teleop;
 
 import android.annotation.SuppressLint;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.hardware.RobotHardware2;
 
 //test
-@TeleOp(name = "OpMode4")
+@Config
+@TeleOp(name = "PID_Test")
 
-public class OpMode4 extends LinearOpMode {
-    double integralSum = 0;
-    double Kp = 0;
-    double Ki = 0;
-    double Kd = 0;
-    double Kf = 0;
-    private double lastError = 0;
+public class PID_Test extends LinearOpMode {
+    private static double integralSum = 0;
+    private static double Kp = 0;
+    private static double Ki = 0;
+    private static double Kd = 0;
+    private static double Kf = 0;
+    private static double lastError = 0;
+    private static double target_position = 100;
 
     ElapsedTime timer = new ElapsedTime();
+
+
 
 
     RobotHardware2 robot = new RobotHardware2();
@@ -32,7 +36,7 @@ public class OpMode4 extends LinearOpMode {
      */
     @SuppressLint("DefaultLocale")
     @Override
-    public void runOpMode() throws InterruptedException {
+    public  void runOpMode() throws InterruptedException {
 
         robot.init2(hardwareMap);
 
@@ -43,21 +47,15 @@ public class OpMode4 extends LinearOpMode {
         waitForStart();
         while (opModeIsActive()) {
 
-            double horizontal = gamepad1.left_stick_x * 0.6; // -0.7
-            double vertical = -gamepad1.left_stick_y * 0.6; // 0.7
-            double turn = gamepad1.right_stick_x * 0.6;
 
-            robot.setDrivePower(vertical + turn + horizontal, vertical - turn + horizontal, vertical + turn - horizontal, vertical - turn - horizontal);
+            double Power = pidControl(target_position, robot.pivotMotor.getVelocity());
+            robot.pivotMotor.setPower(Power);
 
-            telemetry.addLine(String.format("FL: %d \nBL %d \nFR: %d \nBR: %d ",
-                    robot.motorfl.getCurrentPosition(),
-                    robot.motorbl.getCurrentPosition(),
-                    robot.motorfr.getCurrentPosition(),
-                    robot.motorbr.getCurrentPosition()
+            telemetry.addLine(String.format(" pivotMotor: %d ",
+                    robot.pivotMotor.getCurrentPosition()
             ));
-
-           /* double Power = pidControl(100, robot.pivotMotor.getVelocity());
-
+            telemetry.update();
+/*
 
             while (gamepad2.left_stick_y > 0.7) {
                 robot.pivotMotor.setPower(Power);
@@ -69,72 +67,21 @@ public class OpMode4 extends LinearOpMode {
                 sleep(15);
             }
 
-*/
-            if (gamepad2.x) {
-                robot.intakeServo.setPosition(1);
-            }
 
-            if (gamepad2.a) {
-                robot.intakeServo.setPosition(0.25);
-            }
-
-            if (gamepad2.b){
-                robot.intakeServo.setPosition(0);
-            }
-
-
-
-
-            if (gamepad2.right_bumper) {
-                robot.grabServo.setPosition(1);
-            }
-
-            if (gamepad2.left_bumper){
-                robot.grabServo.setPosition(0.2);
-            }
-
-
-
-            while (gamepad1.right_trigger > 0.7) {
-                robot.leftLiftMotor.setPower(0.7);
-                robot.rightLiftMotor.setPower(-0.7);
-            }
-
-            while (gamepad1.left_trigger > 0.7){
-                robot.rightLiftMotor.setPower(-0.7);
-                robot.leftLiftMotor.setPower(0.7);
-            }
-
-            robot.rightLiftMotor.setPower(0);
-            robot.leftLiftMotor.setPower(0);
-
-
-
-            if (gamepad2.right_stick_y > 0.7) {
-                robot.actuatorMotor.setPower(-1);
-            }
-
-            else if (gamepad2.right_stick_y < -0.7){
-                robot.actuatorMotor.setPower(1);
-            }
-
-            else {
-                robot.actuatorMotor.setPower(0);
-            }
 
 
             if (gamepad2.left_stick_y > 0.7) {
-                robot.pivotMotor.setPower(-0.4);
+                robot.pivotMotor.setPower(0.4);
             }
 
             else if (gamepad2.left_stick_y < -0.7){
-                robot.pivotMotor.setPower(0.4);
+                robot.pivotMotor.setPower(-0.4);
             }
 
             else {
                 robot.pivotMotor.setPower(0);
             }
-
+*/
             // 0.7      1                    -0.7
 
 //make sure one of the directions is correct/reversed

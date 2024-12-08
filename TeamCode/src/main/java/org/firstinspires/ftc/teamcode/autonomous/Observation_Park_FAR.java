@@ -32,7 +32,7 @@ public class Observation_Park_FAR extends LinearOpMode {
 //-1-234
             sleep(4000);
             int forwardTicks = 3000; //fix distances
-            driveMotors(-forwardTicks, -forwardTicks, forwardTicks, forwardTicks, 0.4,
+            driveMotors(forwardTicks, forwardTicks, forwardTicks, forwardTicks, 0.4,
                     true, robot.yaw0);
 
 
